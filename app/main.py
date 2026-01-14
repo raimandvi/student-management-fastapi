@@ -1,6 +1,11 @@
 from fastapi import FastAPI
-from .routes import router
+from app.database import engine
+from app import models
+from app.routers import students
 
-app = FastAPI(title="Student Management API")
+models.Base.metadata.create_all(bind=engine)
 
-app.include_router(router)
+app = FastAPI(title="Student Management System")
+
+app.include_router(students.router)
+
